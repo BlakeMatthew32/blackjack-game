@@ -105,10 +105,11 @@ h1 {
 /* game section */
 
 .game-section {
+    position: relative;
     display: flex;
-    justify-content: space-around;
-    height: 300px;
-    border: 1px solid red;
+    justify-content: space-between;
+    height: 440px;
+    border-block: 5px solid #2e2e2e;
     margin: 20px 0;
 }
 
@@ -118,8 +119,21 @@ h1 {
 }
 
 img {
-    width: 100px;
-    margin: 0 10px;
+    width: 80px;
+    margin: 10PX 10px;
+}
+
+.card-containers {
+    width: 50%;
+    max-width: 50%;
+}
+
+.win-display {
+    position: absolute;
+    width: 800px;
+    bottom: 0;
+    font-size: 56px;
+    color:rgb(26, 26, 206);
 }
 
 /* action buttons */

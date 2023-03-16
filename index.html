@@ -8,8 +8,8 @@
         <div class="nav-container">
             <h1>Blackjack</h1>
             <div class="player-info">
-                <p id="player-name">Player </p>
-                <p id="player-chips">Chips: 0</p>
+                <p id="player-name"></p>
+                <p id="player-chips"></p>
             </div>
             <button class="btn settings-btn" id="settings-btn">Settings</button>
         </div>
@@ -27,17 +27,20 @@
             </div>
 
             <div class="game-section">
-                <div class="player">
-                    <h3>Player</h3>
+                <div class="player card-containers">
+                    <h3>Player <span id="player-total"></span></h3>
                     <div class="player-cards" id="player-cards">
                         
                     </div>
                 </div>
-                <div class="dealer">
-                    <h3>Dealer</h3>
+                <div class="dealer card-containers">
+                    <h3>Dealer <span id="dealer-total"></span></h3>
                     <div class="dealer-cards" id="dealer-cards">
                         
                     </div>
+                </div>
+                <div class="win-display" id="win-display">
+                    
                 </div>
             </div>
 

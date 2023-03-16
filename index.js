@@ -54,16 +54,29 @@ let cardsArray = [
     "images/PNG-cards/king_of_diamonds.png"
 ]
 
+// player info 
+let player = {
+    name: "Player",
+    chips: 200
+}
+
+// gameplay variables
+const minBet = 5
+const maxBet = 100
+let currentBet = 5
+
+// player variables 
 let playersCards = []
+let playerSum = 0
+let playerBlackJack = false
+let playerBust = false
+let stick = false
+
+// dealer variables
 let dealersCards = []
-let sum = 0
-let hasBlackJack = false
-let bust = true
-let message = ""
-let messageEl = document.getElementById("message-el")
-let sumEl = document.getElementById("sum-el")
-let cardsEl = document.getElementById("cards-el")
-let playerEl = document.getElementById("player-el")
+let dealerSum = 0
+let dealerBlackJack = false
+let dealerBust = false
 
 // html buttons
 const settingsBtn = document.getElementById("settings-btn")
@@ -73,35 +86,34 @@ const decrementBtn = document.getElementById("decrement-btn")
 const hitBtn = document.getElementById("hit-btn")
 const stickBtn = document.getElementById("stick-btn")
 
-// cards displays
+// html elements
+const playerName = document.getElementById("player-name")
+const playerChips = document.getElementById("player-chips")
+const betAmount = document.getElementById("bet-amount")
 const playerCardDiv = document.getElementById("player-cards")
 const dealerCardDiv = document.getElementById("dealer-cards")
+const winDisplay = document.getElementById("win-display")
 
-// player info 
-let player = {
-    name: "BLAKE",
-    chips: 200
+// initial state
+
+function initChips() {
+    playerName.textContent = player.name
+    playerChips.textContent = `Chips: ${player.chips}`
 }
 
-const playerName = document.getElementById("player-name")
-const playerchips = document.getElementById("player-name")
+initChips()
 
 // bet control
-const minBet = 5;
-const maxBet = 100;
-let currentBet = 5;
-const betAmount = document.getElementById("bet-amount")
-
 incrementBtn.addEventListener("click", () => {
     if(currentBet < maxBet) {
-        currentBet += 5;
+        currentBet += 5
     }
     betAmount.textContent = `Bet: ${currentBet}`
 })
 
 decrementBtn.addEventListener("click", () => {
     if(currentBet > minBet) {
-        currentBet -= 5;
+        currentBet -= 5
     }
     betAmount.textContent = `Bet: ${currentBet}`
 })
@@ -109,41 +121,117 @@ decrementBtn.addEventListener("click", () => {
 // play game
 
 playBtn.addEventListener("click", () => {
-    playerCardDiv.innerHTML = ""
-    bust = false
-    let cardNum1 = getRandomCard()
-    let cardNum2 = getRandomCard()
-    playersCards = [cardsArray[cardNum1], cardsArray[cardNum2]]
-    sum = cardValues(cardNum1) + cardValues(cardNum2)
-    console.log(sum)
-    renderGame()
+    if (player.chips < minBet) {
+        winDisplay.innerText = "Add more chips to play!"
+    }
+    else if (player.chips < currentBet) {
+        winDisplay.innerText = "Not enough chips to play!"
+    } else {
+        player.chips -= currentBet
+        initChips()
+        winDisplay.textContent = ""  
+        dealersCards = []
+        bust = false
+        stick = false
+        let cardNum1 = getRandomCard()
+        let cardNum2 = getRandomCard()
+        playersCards = [cardsArray[cardNum1], cardsArray[cardNum2]]
+        playerSum = cardValues(cardNum1) + cardValues(cardNum2)
+        console.log(playerSum)
+        playerRenderGame()
+        dealerRenderGame()
+    }   
 })
 
-// function startGame() {
-//     bust = false
-//     let cardNum1 = getRandomCard()
-//     let cardNum2 = getRandomCard()
-//     playersCards = [cardsArray[cardNum1], cardsArray[cardNum2]]
-//     sum = cardValues(cardNum1) + cardValues(cardNum2)
-//     renderGame()
-// }
-
-function renderGame() {
+function playerRenderGame() {
+    playerCardDiv.innerHTML = ""
     for (let i = 0; i < playersCards.length; i++) {
         let img = document.createElement("img")
         img.src = playersCards[i]
         playerCardDiv.appendChild(img)
     }
-}
+    playerBust = playerSum > 21
+    playerBlackJack = playerSum === 21
 
-function newCard() {
-    if (bust === false && hasBlackJack === false) {
-        let card = getRandomCard()
-        sum += card
-        playersCards.push(card)
-        renderGame()        
+    if (playerBust) {
+        playerLoses("Bust")
     }
 }
+
+function dealerRenderGame() {
+    dealerCardDiv.innerHTML = ""
+    for (let i = 0; i < dealersCards.length; i++) {
+        let img = document.createElement("img")
+        img.src = dealersCards[i]
+        dealerCardDiv.appendChild(img)
+    }
+    dealerBust = dealerSum > 21
+}
+
+// new card function
+
+hitBtn.addEventListener("click", () => {
+    if (!playerBust && !playerBlackJack && !stick) {
+        let cardNum = getRandomCard()
+        playerSum += cardValues(cardNum)
+        playersCards.push(cardsArray[cardNum])
+        playerRenderGame()        
+    }
+})
+
+stickBtn.addEventListener("click", () => {
+    if (!playerBust && !stick) {
+        stick = true
+        dealerPlays()
+    }
+})
+
+function dealerPlays() {
+    let cardNum1 = getRandomCard()
+    let cardNum2 = getRandomCard()
+    dealersCards = [cardsArray[cardNum1], cardsArray[cardNum2]]
+    dealerSum = cardValues(cardNum1) + cardValues(cardNum2)
+    dealerRenderGame()
+    while (dealerSum < 17) {
+        let cardNum = getRandomCard()
+        dealerSum += cardValues(cardNum)
+        dealersCards.push(cardsArray[cardNum])
+        dealerRenderGame()
+    }
+    console.log(dealerSum)
+    winConditions()
+}
+
+// win conditions 
+
+function winConditions() {
+    if ((playerSum > dealerSum && !playerBust) || dealerBust) {
+        playerWins() 
+    }
+    if (playerSum < dealerSum && !dealerBust) {
+        playerLoses("Lost")
+    }
+    if (playerSum === dealerSum && !playerBust) {
+        draw()
+    }
+}
+
+function playerWins() {
+    player.chips += (currentBet * 2)
+    initChips()
+    winDisplay.textContent = "You Won!"
+}
+
+function playerLoses(lostOrBust) {
+    winDisplay.textContent = `You ${lostOrBust}!`
+}
+
+function draw() {
+    player.chips += currentBet
+    initChips()
+    winDisplay.textContent = "Chips back!"
+}
+
 
 // utility functions
 
