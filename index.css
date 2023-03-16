@@ -11,19 +11,122 @@ h1 {
     color: goldenrod;
 }
 
-#message-el {
-    font-style: italic;
+.btn {
+    background-color: aliceblue;
+    color: black;
+    margin: 3px 0;
+    padding: 8px 0;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
-button {
-    color: #016f32;
-    width: 100px;
-    background: goldenrod;
-    padding-top: 5px;
-    padding-bottom: 5px;
+.btn:hover {
+    cursor: pointer;
+    background-color: #444;
+    color: #f1f1f1;
+}
+
+/* nav styling */
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #2e2e2e;
+}
+
+.player-info {
+    min-width: 400px;
+    max-width: 600px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 24px;
+}
+
+.settings-btn {
+    background-color: transparent;
+    color: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    font-size: 18px;
+}
+
+.settings-btn:hover {
+    background-color: #f1f1f1;
+    color: #2e2e2e;
+}
+
+/* main content styling */
+
+.main-content {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+/* start section */
+
+.start-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.play-btn {
+    width: 120px;
+    padding: 10px;
+}
+
+.set-bet {
+    font-size: 24px;
+    width: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bet-btn {
+    width: min-content;
+    display: inline-block;
+    background-color: transparent;
+    box-sizing: border-box;
     font-weight: bold;
+    font-size: 40px;
+    color: #f1f1f1;
     border: none;
-    border-radius: 2px;
-    margin-bottom: 2px;
-    margin-top: 2px;
+}
+
+.bet-btn:hover {
+    cursor: pointer;
+    color: #444;
+}
+
+/* game section */
+
+.game-section {
+    display: flex;
+    justify-content: space-around;
+    height: 300px;
+    border: 1px solid red;
+    margin: 20px 0;
+}
+
+.game-section h3 {
+    font-size: 42px;
+    margin: 20px
+}
+
+img {
+    width: 100px;
+    margin: 0 10px;
+}
+
+/* action buttons */
+
+.action-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 200px;
+    margin: 30px;
 }

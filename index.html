@@ -2,16 +2,50 @@
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
         <link rel="stylesheet" href="index.css">
+        <script src="https://kit.fontawesome.com/b2d51d51c7.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <h1>Blackjack</h1>
-        <p id="message-el">Want to play a round?</p>
-        <p id="cards-el">Cards:</p>
-        <p id="sum-el">Sum:</p>
-        <button onclick="startGame()">PLAY</button>
-        <button onclick="newCard()">STICK</button>
-        <button onclick="newCard()">HIT</button>
-        <p id="player-el"></p>
+        <div class="nav-container">
+            <h1>Blackjack</h1>
+            <div class="player-info">
+                <p id="player-name">Player </p>
+                <p id="player-chips">Chips: 0</p>
+            </div>
+            <button class="btn settings-btn" id="settings-btn">Settings</button>
+        </div>
+        
+        <main class="main-content">
+            <div class="start-section">
+                <button class="btn play-btn" id="play-btn">Play</button>
+                <div class="set-bet">
+                    <p id="bet-amount">Bet: 5</p>
+                    <div class="bet-buttons">
+                        <button id="decrement-btn" class="bet-btn bet-btn-down"><i class="fa-solid fa-circle-minus bet-btn-down"></i></button>
+                        <button id="increment-btn" class="bet-btn"><i class="fa-solid fa-circle-plus bet-btn-up"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-section">
+                <div class="player">
+                    <h3>Player</h3>
+                    <div class="player-cards" id="player-cards">
+                        
+                    </div>
+                </div>
+                <div class="dealer">
+                    <h3>Dealer</h3>
+                    <div class="dealer-cards" id="dealer-cards">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn" id="hit-btn">Hit</button>
+                <button class="btn" id="stick-btn">Stick</button>
+            </div>
+        </main>
         <script src="index.js"></script>
     </body>
 </html>
