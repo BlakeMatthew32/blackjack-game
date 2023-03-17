@@ -89,6 +89,8 @@ const stickBtn = document.getElementById("stick-btn")
 // html elements
 const playerName = document.getElementById("player-name")
 const playerChips = document.getElementById("player-chips")
+const playerTotal = document.getElementById("player-total")
+const dealerTotal = document.getElementById("dealer-total")
 const betAmount = document.getElementById("bet-amount")
 const playerCardDiv = document.getElementById("player-cards")
 const dealerCardDiv = document.getElementById("dealer-cards")
@@ -150,6 +152,9 @@ function playerRenderGame() {
         img.src = playersCards[i]
         playerCardDiv.appendChild(img)
     }
+
+    playerTotal.textContent = playerSum
+
     playerBust = playerSum > 21
     playerBlackJack = playerSum === 21
 
@@ -165,6 +170,9 @@ function dealerRenderGame() {
         img.src = dealersCards[i]
         dealerCardDiv.appendChild(img)
     }
+
+    dealerTotal.textContent = dealerSum
+
     dealerBust = dealerSum > 21
 }
 
